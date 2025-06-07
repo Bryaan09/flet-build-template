@@ -72,12 +72,15 @@ post_install do |installer|
         '$(inherited)',
 
         {%- for macro, plist_keys in permission_mapping.items() %}
+          {%- set ns = namespace(enabled=False) %}
           {%- for key in plist_keys %}
             {%- if key in cookiecutter.options.info_plist %}
-        '{{ macro }}=1',
-              {%- break %}
+              {%- set ns.enabled = True %}
             {%- endif %}
           {%- endfor %}
+          {%- if ns.enabled %}
+        '{{ macro }}=1',
+          {%- endif %}
         {%- endfor %}
       ]
     end
