@@ -37,8 +37,49 @@ target 'Runner' do
   end
 end
 
+=begin
+{% set permission_mapping = {
+  "PERMISSION_EVENTS": ["NSCalendarsUsageDescription", "NSCalendarWriteOnlyAccessUsageDescription"],
+  "PERMISSION_EVENTS_FULL_ACCESS": ["NSCalendarsFullAccessUsageDescription"],
+  "PERMISSION_REMINDERS": ["NSRemindersFullAccessUsageDescription"],
+  "PERMISSION_CONTACTS": ["NSContactsUsageDescription"],
+  "PERMISSION_CAMERA": ["NSCameraUsageDescription"],
+  "PERMISSION_MICROPHONE": ["NSMicrophoneUsageDescription"],
+  "PERMISSION_SPEECH_RECOGNIZER": ["NSSpeechRecognitionUsageDescription"],
+  "PERMISSION_PHOTOS": ["NSPhotoLibraryUsageDescription"],
+  "PERMISSION_PHOTOS_ADD_ONLY": ["NSPhotoLibraryAddUsageDescription"],
+  "PERMISSION_LOCATION": [
+    "NSLocationUsageDescription",
+    "NSLocationAlwaysAndWhenInUseUsageDescription",
+    "NSLocationWhenInUseUsageDescription"
+  ],
+  "PERMISSION_LOCATION_WHENINUSE": ["NSLocationWhenInUseUsageDescription"],
+  "PERMISSION_MEDIA_LIBRARY": ["NSAppleMusicUsageDescription"],
+  "PERMISSION_SENSORS": ["NSMotionUsageDescription"],
+  "PERMISSION_BLUETOOTH": ["NSBluetoothAlwaysUsageDescription", "NSBluetoothPeripheralUsageDescription"],
+  "PERMISSION_APP_TRACKING_TRANSPARENCY": ["NSUserTrackingUsageDescription"],
+  "PERMISSION_CRITICAL_ALERTS": ["UNAuthorizationOptionCriticalAlert"],
+  "PERMISSION_ASSISTANT": ["NSSiriUsageDescription"]
+} %}
+=end
+
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
+
+    target.build_configurations.each do |config|
+      config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
+        '$(inherited)',
+
+        {%- for macro, plist_keys in permission_mapping.items() %}
+          {%- for key in plist_keys %}
+            {%- if key in cookiecutter.options.info_plist %}
+        '{{ macro }}=1',
+              {%- break %}
+            {%- endif %}
+          {%- endfor %}
+        {%- endfor %}
+      ]
+    end
   end
 end
