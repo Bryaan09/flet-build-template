@@ -124,6 +124,7 @@ Future prepareApp() async {
 
   await setupDesktop();
 
+  var devPageUrl = const String.fromEnvironment("FLET_PAGE_URL");
   if (kIsWeb) {
     // web mode - connect via HTTP
     pageUrl = Uri.base.toString();
@@ -131,10 +132,13 @@ Future prepareApp() async {
     if (routeUrlStrategy == "path") {
       setPathUrlStrategy();
     }
-  } else if (_args.isNotEmpty && isDesktopPlatform()) {
+  } else if ((_args.isNotEmpty || devPageUrl != "") && isDesktopPlatform()) {
     // developer mode
     debugPrint("Flet app is running in Developer mode");
-    pageUrl = _args[0];
+    pageUrl = devPageUrl;
+    if (_args.isNotEmpty && pageUrl == "") {
+      pageUrl = _args[0];
+    }
     if (_args.length > 1) {
       var pidFilePath = _args[1];
       debugPrint("Args contain a path to PID file: $pidFilePath}");
