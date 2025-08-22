@@ -29,11 +29,11 @@ dependency_overrides:
       ref: main
       url: https://github.com/flet-dev/flet.git
 
-  # serious_python:
-  #   git:
-  #     url: https://github.com/flet-dev/serious-python.git
-  #     ref: main
-  #     path: src/serious_python
+  serious_python:
+    git:
+      url: https://github.com/flet-dev/serious-python.git
+      ref: hidden-files-fix
+      path: src/serious_python
 
   wakelock_plus: ^1.2.10
   web: ^1.0.0
