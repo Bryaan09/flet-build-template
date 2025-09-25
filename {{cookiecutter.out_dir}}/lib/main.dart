@@ -129,12 +129,12 @@ void main(List<String> args) async {
 }
 
 Future prepareApp() async {
-  if (!_args.contains("--debug")) {
-    // ignore: avoid_returning_null_for_void
-    debugPrint = (String? message, {int? wrapWidth}) => null;
-  } else {
-    _args.remove("--debug");
-  }
+  // if (!_args.contains("--debug")) {
+  //   // ignore: avoid_returning_null_for_void
+  //   debugPrint = (String? message, {int? wrapWidth}) => null;
+  // } else {
+  //   _args.remove("--debug");
+  // }
 
   await setupDesktop();
 
