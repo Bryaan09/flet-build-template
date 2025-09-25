@@ -73,7 +73,7 @@ void main(List<String> args) async {
     ext.ensureInitialized();
   }
 
-  runApp(FutureBuilder(
+  var app = FutureBuilder(
       future: prepareApp(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
@@ -84,7 +84,8 @@ void main(List<String> args) async {
                   assetsDir: assetsDir,
                   showAppStartupScreen: showAppStartupScreen,
                   appStartupScreenMessage: appStartupScreenMessage,
-                  extensions: extensions)
+                  extensions: extensions,
+                  multiView: isMultiView())
               : FutureBuilder(
                   future: runPythonApp(args),
                   builder:
@@ -103,7 +104,8 @@ void main(List<String> args) async {
                           assetsDir: assetsDir,
                           showAppStartupScreen: showAppStartupScreen,
                           appStartupScreenMessage: appStartupScreenMessage,
-                          extensions: extensions);
+                          extensions: extensions,
+                          multiView: isMultiView());
                     }
                   });
         } else if (snapshot.hasError) {
@@ -116,7 +118,14 @@ void main(List<String> args) async {
           // loading
           return MaterialApp(home: showAppBootScreen ? const BootScreen() : const BlankScreen());
         }
-      }));
+      });
+
+  if (isMultiView()) {
+    debugPrint("Flet Web Multi-View mode");
+    runWidget(app);
+  } else {
+    runApp(app);
+  }
 }
 
 Future prepareApp() async {
