@@ -3,7 +3,7 @@
 
 var flutterConfig = {
     multiViewEnabled: flet.multiView,
-    entryPointBaseUrl: flet.entryPointBaseUrl,
+    entrypointBaseUrl: flet.entrypointBaseUrl,
     assetBase: flet.assetBase
 };
 if (flet.webRenderer != "auto") {
