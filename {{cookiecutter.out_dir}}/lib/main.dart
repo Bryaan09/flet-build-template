@@ -46,6 +46,8 @@ const appBootScreenMessage = '{{ boot_screen_message | default("Preparing the ap
 final showAppStartupScreen = bool.tryParse("{{ show_startup_screen }}".toLowerCase()) ?? false;
 const appStartupScreenMessage = '{{ startup_screen_message | default("Getting things ready…", true) }}';
 
+Tester? tester;
+
 List<FletExtension> extensions = [
 {% for dep in cookiecutter.flutter.dependencies %}
 {{ dep }}.Extension(),
@@ -84,7 +86,8 @@ void main(List<String> args) async {
                   assetsDir: assetsDir,
                   showAppStartupScreen: showAppStartupScreen,
                   appStartupScreenMessage: appStartupScreenMessage,
-                  extensions: extensions)
+                  extensions: extensions,
+                  tester: tester)
               : FutureBuilder(
                   future: runPythonApp(args),
                   builder:
@@ -103,7 +106,8 @@ void main(List<String> args) async {
                           assetsDir: assetsDir,
                           showAppStartupScreen: showAppStartupScreen,
                           appStartupScreenMessage: appStartupScreenMessage,
-                          extensions: extensions);
+                          extensions: extensions,
+                          tester: tester);
                     }
                   });
         } else if (snapshot.hasError) {
