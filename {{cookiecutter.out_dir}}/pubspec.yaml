@@ -32,7 +32,7 @@ dependency_overrides:
   serious_python:
     git:
       url: https://github.com/flet-dev/serious-python.git
-      ref: android-16k
+      ref: main
       path: src/serious_python
 
   wakelock_plus: ^1.2.10
@@ -56,6 +56,13 @@ dev_dependencies:
   flutter_launcher_icons: ^0.14.1
   flutter_native_splash: ^2.4.1
   flutter_lints: ^2.0.0
+  integration_test:
+    sdk: flutter
+  flet_integration_test:
+    git:
+      url: https://github.com/flet-dev/flet.git
+      ref: v1-flet-test
+      path: packages/flet_integration_test
 
 flutter:
 
