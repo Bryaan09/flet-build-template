@@ -37,7 +37,7 @@ show_startup_screen: {{ show_startup_screen }}
 startup_screen_message: {{ startup_screen_message }}
 */
 
-const bool isProduction = bool.fromEnvironment('dart.vm.product');
+const bool isRelease = bool.fromEnvironment('dart.vm.product');
 
 const assetPath = "app/app.zip";
 const pythonModuleName = "{{ cookiecutter.python_module_name }}";
@@ -124,7 +124,7 @@ void main(List<String> args) async {
 }
 
 Future prepareApp() async {
-  if (!_args.contains("--debug")) {
+  if (!_args.contains("--debug") && isRelease) {
     // ignore: avoid_returning_null_for_void
     debugPrint = (String? message, {int? wrapWidth}) => null;
   } else {
