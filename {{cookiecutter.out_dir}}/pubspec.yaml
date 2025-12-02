@@ -27,13 +27,13 @@ dependency_overrides:
       ref: main
       url: https://github.com/flet-dev/flet.git
 
-  #serious_python: 0.9.5
+  serious_python: 0.9.6
 
-  serious_python:
-    git:
-      url: https://github.com/flet-dev/serious-python.git
-      ref: fix-zip-directory
-      path: src/serious_python
+  # serious_python:
+  #   git:
+  #     url: https://github.com/flet-dev/serious-python.git
+  #     ref: fix-zip-directory
+  #     path: src/serious_python
 
   wakelock_plus: ^1.4.0
   package_info_plus: ^9.0.0
